@@ -15,7 +15,7 @@ Each sample represents a user's load data over a 24‑hour period. The sampling 
 |----------------------|------------------------|-------------|
 | Dynamic Reduction    | Dynamic Reduction      | Load curve is randomly and dynamically reduced with varying amplitude, simulating irregular theft behavior. |
 | Peak Clipping        | Peak Clipping          | High peaks in the load curve are clipped below a certain threshold, simulating avoidance of peak consumption records. |
-| Random Reduction     | Random Reduction       | Randomly selects multiple time points and reduces the load values by a certain proportion. |
+| Random Reduction     | Random Reduction       | Randomly selects multiple time points and reduces the load values by a random proportion. |
 | Single‑Point Zeroing | Single‑Point Zeroing   | Sets a single sampling point’s load value to zero. |
 | Peak Shifting        | Peak Shifting          | Shifts peak load values within a time window forward or backward, altering the load distribution pattern. |
 | Interval Zeroing     | Interval Zeroing       | Sets load values in a continuous interval of sampling points to zero. |
