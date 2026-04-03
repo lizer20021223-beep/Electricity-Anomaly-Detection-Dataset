@@ -1,59 +1,57 @@
 # Electricity Anomaly Detection Dataset
 
-## 数据集概述
+## Dataset Overview
 
-本数据集为电力窃电检测数据集，包含正常用电数据与6类典型异常（窃电）行为数据。数据集总样本量为7000条，每类样本数量均衡。
+This dataset is designed for electricity theft detection, containing normal electricity consumption data and six types of typical anomaly (theft) behaviors. The total sample size is 7,000, with balanced numbers across categories.
 
-- **正常样本**：1000条
-- **异常样本**：共6000条，每类异常各1000条
+- **Normal samples**: 1,000
+- **Anomaly samples**: 6,000 in total, 1,000 for each of the six anomaly types
 
-每个样本为一个用户在24小时周期内的负荷数据，采集间隔为15分钟，因此每个样本包含96个连续时间点的负荷值（单位：kW 或 归一化值，依原始数据而定）。
+Each sample represents a user's load data over a 24‑hour period. The sampling interval is 15 minutes, so each sample consists of 96 consecutive load values (unit: kW or normalized, depending on the original data).
 
-## 异常类型说明
+## Anomaly Type Description
 
-| 异常类型 | 英文标识 | 描述 |
-|---------|---------|------|
-| 动态削减 | Dynamic Reduction | 负荷曲线随机动态削减，幅度随时间变化，模拟不规则窃电行为。 |
-| 峰值裁剪 | Peak Clipping | 将负荷曲线中的高峰值裁剪到某个阈值以下，模拟用户规避尖峰用电记录。 |
-| 随机削减 | Random Reduction | 随机选择多个时间点，按一定比例降低其负荷值。 |
-| 单点置零 | Single-Point Zeroing | 将单个采样点的负荷值直接置为0。 |
-| 峰值平移 | Peak Shifting | 将某段时间内的负荷峰值向后或向前平移，改变负荷分布形态。 |
-| 区间置零 | Interval Zeroing | 将连续一段采样区间内的负荷值全部置为0。 |
+| Anomaly Type         | Label                  | Description |
+|----------------------|------------------------|-------------|
+| Dynamic Reduction    | Dynamic Reduction      | Load curve is randomly and dynamically reduced with varying amplitude, simulating irregular theft behavior. |
+| Peak Clipping        | Peak Clipping          | High peaks in the load curve are clipped below a certain threshold, simulating avoidance of peak consumption records. |
+| Random Reduction     | Random Reduction       | Randomly selects multiple time points and reduces the load values by a certain proportion. |
+| Single‑Point Zeroing | Single‑Point Zeroing   | Sets a single sampling point’s load value to zero. |
+| Peak Shifting        | Peak Shifting          | Shifts peak load values within a time window forward or backward, altering the load distribution pattern. |
+| Interval Zeroing     | Interval Zeroing       | Sets load values in a continuous interval of sampling points to zero. |
 
-## 数据格式
+## Data Format
 
-- **采集周期**：24小时
-- **采样间隔**：15分钟
-- **每个样本点数**：24 × (60 / 15) = 96
+- **Recording period**: 24 hours
+- **Sampling interval**: 15 minutes
+- **Points per sample**: 24 × (60 / 15) = 96
 
-### 典型数据结构
+### Typical Data Structure
 
-| 字段名 | 类型 | 描述 |
-|-------|------|------|
-| `id` | int | 样本唯一标识（可选） |
-| `label` | int / str | 类别标签：0 表示正常，1~6 分别对应上述6类异常（或使用异常名称字符串） |
-| `load_curve` | list[float] | 长度为96的负荷序列，按时间顺序排列 |
+| Field       | Type           | Description |
+|-------------|----------------|-------------|
+| `id`        | int            | Unique sample identifier (optional) |
+| `label`     | int / str      | Class label: 0 for normal, 1–6 for the six anomaly types (or using anomaly name strings) |
+| `load_curve`| list[float]    | Load sequence of length 96, ordered by time |
 
-> 注：具体字段名可能因文件格式（CSV/JSON/Excel）略有差异，请以实际数据文件为准。
+> Note: Actual field names may vary slightly depending on file format (CSV/JSON/Excel). Please refer to the actual data files.
 
+## Use Cases
 
+- Binary classification: normal vs. anomaly (theft)
+- Multi‑class classification: identify the specific theft technique (6 anomaly types)
+- Anomaly detection: train only on normal data to detect any deviation from normal patterns
 
-## 使用场景
+## Important Notes
 
-- 二分类：正常 vs 异常（窃电）
-- 多分类：识别具体窃电手法（6类异常）
-- 异常检测：仅使用正常数据训练，检测任何偏离正常模式的样本
+1. The load data may have been normalized; please refer to the original data source for absolute units.
+2. The anomalies are synthetically injected; real‑world theft behaviors can be more complex, so careful evaluation of model generalization is advised.
+3. The dataset is balanced across categories, but in real scenarios anomaly samples are rare. When evaluating, focus on precision, recall, F1‑score, etc.
 
-## 注意事项
+## Citation & License
 
-1. 负荷数据可能已进行归一化处理，原始量纲请参考数据来源说明。
-2. 异常注入方式为仿真生成，实际窃电行为可能更复杂，模型需谨慎评估泛化能力。
-3. 数据集中各类别数量平衡，但实际场景中异常样本极少，评测时应关注精确率、召回率、F1等指标。
-
-## 引用与许可
-
-请遵守数据提供方的使用条款。若在学术研究中使用本数据集，建议引用原始发布来源（如有）。
+Please comply with the usage terms provided by the data distributor. If you use this dataset in academic research, it is recommended to cite the original source (if any).
 
 ---
 
-*最后更新：2026年4月*
+*Last updated: April 2026*
